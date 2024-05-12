@@ -1,0 +1,28 @@
+body {
+  background-color: black;
+}
+
+.container {
+  background-color: blueviolet;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.btns-container {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.correct {
+  background-color: green;
+}
+
+.wrong {
+  background-color: red;
+}
