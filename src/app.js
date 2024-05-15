@@ -6,8 +6,6 @@ const path = require('path');
 
 const questions = require('./data');
 
-let updatedSkillLevel = 1; // Initial skill level
-
 const app = express();
 
 // Serve static files from the 'public' directory
@@ -28,27 +26,32 @@ app.get('/', async (req, res) => {
 
 //Getting questions from OpenAI API
 //...
-app.get('/quiz', async (req, res) => {
-    const { question, options } = questions.find(question => question.skill_level >= updatedSkillLevel);
-    const plainQuestion = { "question": question, "options": [...options] }
+app.get('/quizAttempt', async (req, res) => {
+    const { question, options, skill_level } = questions.find(question => question.skill_level >= 1);
+    const plainQuestion = { "question": question, "options": [...options], skill_level }
     res.json(plainQuestion)
 })
 
-app.post('/quiz', async (req, res) => {
-    const { scores, skill_level } = questions.find(question => question.skill_level >= updatedSkillLevel);
+app.post('/question', async (req, res) => {
+    const { updatedSkillLevel } = req.body
+    const { question, options } = questions.find(question => question.skill_level >= updatedSkillLevel);
+    const plainQuestion = { "question": question, "options": [...options], updatedSkillLevel }
+    res.json(plainQuestion)
+})
+
+app.post('/answer', async (req, res) => {
     //Recives answer from the user
-    const { answerNumber } = req.body;
+    const { answerNumber, updatedSkillLevel } = req.body;
+    const { scores, skill_level } = questions.find(question => question.skill_level == updatedSkillLevel);
 
     const correctIndex = scores.findIndex(score => score == 1);
 
     //Check if correct or wrong
     if (answerNumber == correctIndex) {
-        updatedSkillLevel = Math.min(skill_level + 1, 10);
-        res.json({ message: 'Correct!', correctIndex, selected: answerNumber });
+        res.json({ message: 'Correct!', correctIndex, selected: answerNumber, skill_level: Math.min(skill_level + 1, 10) });
     }
     else {
-        updatedSkillLevel = Math.max(skill_level - 1, 1);
-        res.json({ message: 'Wrong!', correctIndex, selected: answerNumber });
+        res.json({ message: 'Wrong!', correctIndex, selected: answerNumber, skill_level: Math.max(skill_level - 1, 1) });
     }
 })
 

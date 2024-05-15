@@ -8,7 +8,7 @@ const questions = [
     {
         "question": "What is the square root of 16?",
         "options": ["2", "4", "6", "8"],
-        "scores": [1, 0, 0, 0],
+        "scores": [0, 1, 0, 0],
         "skill_level": 2
     },
     {
@@ -32,7 +32,7 @@ const questions = [
     {
         "question": "What is the next number in the Fibonacci sequence: 1, 1, 2, 3, 5, ...?",
         "options": ["8", "9", "10", "11"],
-        "scores": [0, 0, 1, 0],
+        "scores": [1, 0, 0, 0],
         "skill_level": 4
     },
     {
@@ -44,13 +44,13 @@ const questions = [
     {
         "question": "What is the perimeter of a square with side length 10 units?",
         "options": ["30 units", "35 units", "40 units", "45 units"],
-        "scores": [0, 0, 0, 1],
+        "scores": [0, 0, 1, 0],
         "skill_level": 5
     },
     {
         "question": "If x + 5 = 10, what is the value of x?",
         "options": ["2", "5", "10", "15"],
-        "scores": [1, 0, 0, 0],
+        "scores": [0, 1, 0, 0],
         "skill_level": 5
     },
     {
@@ -68,7 +68,7 @@ const questions = [
     {
         "question": "What is the value of cos(π/3)?",
         "options": ["0", "1", "-1/2", "1/2"],
-        "scores": [0, 0, 1, 0],
+        "scores": [0, 0, 0, 1],
         "skill_level": 6
     },
     {
@@ -98,7 +98,7 @@ const questions = [
     {
         "question": "What is the value of log5(125)?",
         "options": ["2", "3", "4", "5"],
-        "scores": [0, 0, 1, 0],
+        "scores": [0, 1, 0, 0],
         "skill_level": 8
     },
     {
@@ -108,21 +108,15 @@ const questions = [
         "skill_level": 9
     },
     {
-        "question": "What is the value of (1 + i)^2?",
-        "options": ["1", "2", "3", "4"],
-        "scores": [0, 0, 0, 1],
-        "skill_level": 9
-    },
-    {
         "question": "What is the value of cot(π/4)?",
         "options": ["0", "1", "-1", "2"],
-        "scores": [0, 0, 1, 0],
+        "scores": [0, 1, 0, 0],
         "skill_level": 10
     },
     {
         "question": "What is the value of log7(49)?",
         "options": ["1", "2", "3", "4"],
-        "scores": [0, 0, 1, 0],
+        "scores": [0, 1, 0, 0],
         "skill_level": 10
     }
 ];

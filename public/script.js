@@ -17,17 +17,20 @@ const scoreElement = document.querySelector('#score');
 const skippedElement = document.querySelector('#skipped');
 const wrongElement = document.querySelector('#wrong');
 
+let currentSkillLevel;
+
 //Main
 (async () => {
     //Start Quiz
     playButton.addEventListener('click', async () => {
-        const question = await fetchQuizData();
-        await startGame(question);
+        const quizAttempt = await fetchAttempt('/quizAttempt');
+        currentSkillLevel = 1;
+        await startGame(quizAttempt);
     })
 
     //Next question
     nextButton.addEventListener('click', async () => {
-        const question = await fetchQuizData();
+        const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
         await nextQuestion(question)
     })
 
@@ -35,30 +38,17 @@ const wrongElement = document.querySelector('#wrong');
     checkButton.addEventListener('click', async () => {
         const checkedInput = document.querySelector("input[type='radio']:checked")
         const orderNumber = checkedInput.getAttribute('data-order')
-        const answer = { answerNumber: orderNumber }
-        const result = await fetch('/quiz', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(answer)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            })
+
+        const result = await fetchQuiz('/answer', { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel })
+        currentSkillLevel = result.skill_level;
         await checkQuestion(result);
     })
 
     //Skip question
     skipButton.addEventListener('click', async () => {
-        skipped++
-        await nextQuestion(shuffledQuestions)
+        skipped++;
+        const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
+        await nextQuestion(question);
     })
 
     //Finish quiz
@@ -68,9 +58,9 @@ const wrongElement = document.querySelector('#wrong');
 
     //Restart quiz
     restartButton.addEventListener('click', async () => {
-        shuffledQuestions = await shuffle(shuffledQuestions)
         await restartQuiz();
-        await startGame();
+        const quizAttempt = await fetchAttempt('/quizAttempt');
+        await startGame(quizAttempt);
     })
 
 })();
@@ -98,10 +88,12 @@ async function startGame(question) {
 
 //Next question
 async function nextQuestion(question) {
-    // if (currentQuestionIndex > 10) {
-    //     return await finishQuiz()
-    // }
-    console.log(question);
+
+    currentQuestionIndex++
+
+    if (currentQuestionIndex > 10) {
+        return await finishQuiz()
+    }
     skippedElement.textContent = `Skipped: ${skipped}/10`
 
     checkButton.disabled = false
@@ -135,7 +127,7 @@ async function showQuestion(question) {
 
 //Check question if correct or not
 async function checkQuestion(result) {
-    console.log(result);
+
     if (result.message === 'Correct!') {
         scorePoints++;
         scoreElement.textContent = `Score: ${scorePoints}/10`
@@ -148,15 +140,6 @@ async function checkQuestion(result) {
         wrongElement.textContent = `Wrong: ${wrong}/10`
     }
     await lockAnswer()
-}
-
-//Show correct answer if wrong
-async function showCorrectAnswer(question) {
-    question.scores.forEach(async (score, index) => {
-        if (score == 1) {
-            document.querySelector(`label[data-order='${index}']`).classList.add('correct')
-        }
-    })
 }
 
 //Lock in the selected answer
@@ -198,14 +181,36 @@ async function restartQuiz() {
 }
 
 //Get data
-async function fetchQuizData() {
+async function fetchAttempt(url) {
     try {
-        const response = await fetch('/quiz');
+        const response = await fetch(url);
         const data = await response.json();
         return data;
     } catch (error) {
         console.error(error);
         return null;
+    }
+}
+
+//Post
+async function fetchQuiz(url, json) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(json)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error; // Re-throwing the error so the caller can handle it
     }
 }
 
