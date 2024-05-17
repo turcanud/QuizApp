@@ -1,20 +1,26 @@
-GET http://localhost:3000/quizAttempt
-
-###
-
-POST http://localhost:3000/question
+POST http://localhost:3000/register
 Content-Type: application/json
 
 {
-    "updatedSkillLevel" : "3"
+    "name" : "Vitalie",
+    "email" : "vitallie@admin.111",
+    "password" : "password"
 }
 
 ###
+GET http://localhost:3000/
 
-POST http://localhost:3000/answer
+###
+
+POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "answerNumber" : "1",
-    "updatedSkillLevel" : "1"
+    "email" : "vitalie@admin.111",
+    "password" : "password"
 }
+
+###
+GET http://localhost:3000/attempt
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQ2ZmVkNTRmM2FjYzQ2NDFlZjEyYzYiLCJuYW1lIjoiVml0YWxpZSIsImVtYWlsIjoidml0YWxpZUBhZG1pbi4xMTEiLCJwYXNzd29yZCI6IiQyYiQxMCRFZ0FRcm51UlNlMkRhR0NEZ2FmdUdlbi5DUXhNVDRac3MzNlFwVGdEbUpYcnRNeDFVbHVmLiIsImNyZWF0ZWRBdCI6IjIwMjQtMDUtMTdUMDY6NTM6MDkuMTY2WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDUtMTdUMDY6NTM6MDkuMTY2WiIsIl9fdiI6MCwiaWF0IjoxNzE1OTM5NzQ5LCJleHAiOjE3MTU5NDMzNDl9.Qbm7FvAnLT0zvSYjYEp2L1nd6SQQX9N1MOIX7MMVbzc
+

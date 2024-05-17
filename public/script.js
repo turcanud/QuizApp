@@ -1,4 +1,6 @@
 const loader = document.querySelector(".loader");
+const profileName = document.querySelector(".profile-name");
+const accessToken = localStorage.getItem('accessToken');
 
 // Function to show loader
 function showLoader() {
@@ -43,6 +45,9 @@ let currentSkillLevel;
 
     //Start Quiz
     playButton.addEventListener('click', async () => {
+        await showLoader();
+        const quizAttempt = await fetchAttempt('/attempt');
+        await hideLoader();
         await startTimer()
         startButtonsContainer.classList.add('hidden');
         quizContainer.classList.remove('hidden');
@@ -50,19 +55,16 @@ let currentSkillLevel;
         scoreElement.classList.remove('hidden')
         skippedElement.classList.remove('hidden')
         wrongElement.classList.remove('hidden')
-        await showLoader();
-        const quizAttempt = await fetchAttempt('/attempt');
-        await hideLoader();
         currentSkillLevel = quizAttempt.skill_level;
         await startGame(quizAttempt);
     })
 
     //Next question
     nextButton.addEventListener('click', async () => {
-        skipButton.disabled = false;
         await showLoader();
         const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
         await hideLoader();
+        skipButton.disabled = false;
         await nextQuestion(question)
     })
 
@@ -81,10 +83,10 @@ let currentSkillLevel;
 
     //Skip question
     skipButton.addEventListener('click', async () => {
-        skipped++;
         await showLoader();
         const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
         await hideLoader();
+        skipped++;
         await nextQuestion(question);
     })
 
@@ -95,11 +97,11 @@ let currentSkillLevel;
 
     //Restart quiz
     restartButton.addEventListener('click', async () => {
-        await startTimer()
-        await restartQuiz();
         await showLoader();
         const quizAttempt = await fetchAttempt('/attempt');
         await hideLoader();
+        await startTimer()
+        await restartQuiz();
         await startGame(quizAttempt);
     })
 
@@ -221,7 +223,12 @@ async function restartQuiz() {
 //Get data
 async function fetchAttempt(url) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
         const data = await response.json();
         return data;
     } catch (error) {
@@ -236,6 +243,7 @@ async function fetchQuiz(url, json) {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(json)
