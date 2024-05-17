@@ -8,8 +8,10 @@
     <script defer src="script.js"></script>
   </head>
   <body>
+    <div class="loader"></div>
     <div class="container">
       <h1 class="title">Quiz Game</h1>
+      <div id="timer">Time Elapsed: <span id="timer-display">00:00</span></div>
       <h2 id="score">Score</h2>
       <h2 id="skipped">Skipped</h2>
       <h2 id="wrong">Wrong</h2>
@@ -21,14 +23,16 @@
       </div>
 
       <div id="game" class="game-container hidden">
-        <p id="question"></p>
+        <p id="question" class="questionText"></p>
         <div id="options-container"></div>
         <div class="control-btns">
-          <button id="check-btn" type="button">Check</button>
-          <button id="next-btn" type="button">Next</button>
-          <button id="skip-btn" type="button">Skip</button>
-          <button id="finish-btn" type="button">Finish</button>
-          <button id="restart-btn" type="button">Restart</button>
+          <button id="check-btn" class="ctl-btn" type="button">Check</button>
+          <button id="next-btn" class="ctl-btn" type="button">Next</button>
+          <button id="skip-btn" class="ctl-btn" type="button">Skip</button>
+          <button id="finish-btn" class="ctl-btn" type="button">Finish</button>
+          <button id="restart-btn" class="ctl-btn" type="button">
+            Restart
+          </button>
         </div>
       </div>
     </div>

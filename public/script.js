@@ -1,3 +1,19 @@
+const loader = document.querySelector(".loader");
+
+// Function to show loader
+function showLoader() {
+    loader.classList.remove("loader--hidden");
+}
+
+// Function to hide loader
+function hideLoader() {
+    loader.classList.add("loader--hidden");
+}
+
+window.addEventListener("load", () => {
+    hideLoader(); // Hide loader when the window is loaded
+});
+
 const startButtonsContainer = document.querySelector('.btns-container');
 const quizContainer = document.querySelector('#game');
 
@@ -21,33 +37,54 @@ let currentSkillLevel;
 
 //Main
 (async () => {
+    scoreElement.classList.add('hidden')
+    skippedElement.classList.add('hidden')
+    wrongElement.classList.add('hidden')
+
     //Start Quiz
     playButton.addEventListener('click', async () => {
-        const quizAttempt = await fetchAttempt('/quizAttempt');
-        currentSkillLevel = 1;
+        await startTimer()
+        startButtonsContainer.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        restartButton.classList.add('hidden');
+        scoreElement.classList.remove('hidden')
+        skippedElement.classList.remove('hidden')
+        wrongElement.classList.remove('hidden')
+        await showLoader();
+        const quizAttempt = await fetchAttempt('/attempt');
+        await hideLoader();
+        currentSkillLevel = quizAttempt.skill_level;
         await startGame(quizAttempt);
     })
 
     //Next question
     nextButton.addEventListener('click', async () => {
+        skipButton.disabled = false;
+        await showLoader();
         const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
+        await hideLoader();
         await nextQuestion(question)
     })
 
     //Check question
     checkButton.addEventListener('click', async () => {
+        skipButton.disabled = true;
         const checkedInput = document.querySelector("input[type='radio']:checked")
         const orderNumber = checkedInput.getAttribute('data-order')
-
+        await showLoader();
         const result = await fetchQuiz('/answer', { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel })
-        currentSkillLevel = result.skill_level;
+        await hideLoader();
+        currentSkillLevel = result.skill_level
+        console.log('after check : ', result);
         await checkQuestion(result);
     })
 
     //Skip question
     skipButton.addEventListener('click', async () => {
         skipped++;
+        await showLoader();
         const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
+        await hideLoader();
         await nextQuestion(question);
     })
 
@@ -58,8 +95,11 @@ let currentSkillLevel;
 
     //Restart quiz
     restartButton.addEventListener('click', async () => {
+        await startTimer()
         await restartQuiz();
-        const quizAttempt = await fetchAttempt('/quizAttempt');
+        await showLoader();
+        const quizAttempt = await fetchAttempt('/attempt');
+        await hideLoader();
         await startGame(quizAttempt);
     })
 
@@ -76,9 +116,6 @@ async function startGame(question) {
     skippedElement.textContent = `Skipped: 0/10`
     wrongElement.textContent = `Wrong: 0/10`
 
-    startButtonsContainer.classList.add('hidden');
-    quizContainer.classList.remove('hidden');
-    restartButton.classList.add('hidden');
     restartButton.disabled = true
 
     nextButton.disabled = true
@@ -161,6 +198,7 @@ async function reset() {
 
 // Finishing quiz
 async function finishQuiz() {
+    await stopTimer()
     questionElement.classList.add('hidden')
     nextButton.classList.add('hidden')
     checkButton.classList.add('hidden')
@@ -214,7 +252,24 @@ async function fetchQuiz(url, json) {
     }
 }
 
-//Shuffle
-async function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
+//Timer
+const timerDisplay = document.querySelector('#timer-display')
+let startTime;
+let timerInterval;
+
+async function updateTimerDisplay() {
+    const currentTime = new Date().getTime();
+    const elapsedTime = new Date(currentTime - startTime);
+    const minutes = elapsedTime.getMinutes().toString().padStart(2, '0');
+    const seconds = elapsedTime.getSeconds().toString().padStart(2, '0');
+    timerDisplay.textContent = `${minutes}:${seconds}`;
+}
+
+async function startTimer() {
+    startTime = new Date().getTime();
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+}
+
+async function stopTimer() {
+    clearInterval(timerInterval);
 }

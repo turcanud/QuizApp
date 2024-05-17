@@ -1,28 +1,167 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
 body {
-  background-color: black;
+  background-color: #f4f4f4; /* Light gray background */
+  font-family: Arial, sans-serif;
 }
 
+/* Container styles */
 .container {
-  background-color: blueviolet;
+  background-color: #fff; /* White container background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
+  padding: 20px;
 }
 
+/* Title styles */
+.title {
+  color: #333; /* Dark gray text color */
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+/* Buttons container styles */
 .btns-container {
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+.btn {
+  background-color: #4caf50; /* Green button background */
+  color: #fff; /* White button text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Game container styles */
+.game-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Question text styles */
+.questionText {
+  font-size: 24px; /* Increase font size */
+  font-weight: bold; /* Make the text bold */
+  color: #333; /* Dark gray text color */
+  text-align: center; /* Center-align the text */
+  margin-bottom: 20px; /* Add some space below the question */
+}
+
+/* Options container styles */
+#options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Control buttons styles */
+.control-btns {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.ctl-btn {
+  background-color: #4caf50; /* Green button background */
+  color: #fff; /* White button text color */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ctl-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.ctl-btn:disabled {
+  background-color: #ccc; /* Light gray background when disabled */
+  color: #666; /* Dark gray text color when disabled */
+  cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+.ctl-btn:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* Result styles */
+.correct {
+  background-color: #4caf50; /* Green for correct answer */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.wrong {
+  background-color: #f44336; /* Red for wrong answer */
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 .hidden {
   display: none;
 }
 
-.correct {
-  background-color: green;
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333333;
+  transition: opacity 0.25s, visibility 0.25s;
 }
 
-.wrong {
-  background-color: red;
+.loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: "";
+  width: 75px;
+  height: 75px;
+  border: 15px solid #dddddd;
+  border-top-color: #009578;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
 }

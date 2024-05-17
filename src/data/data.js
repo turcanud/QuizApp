@@ -12,12 +12,6 @@ const questions = [
         "skill_level": 2
     },
     {
-        "question": "What is 12 ÷ 3?",
-        "options": ["2", "3", "4", "6"],
-        "scores": [0, 0, 1, 0],
-        "skill_level": 2
-    },
-    {
         "question": "What is the value of π (pi) to two decimal places?",
         "options": ["3.14", "3.16", "3.18", "3.20"],
         "scores": [1, 0, 0, 0],

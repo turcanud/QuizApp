@@ -1,10 +1,10 @@
 const express = require('express');
 
 const userRouter = require('./routes/user')
+const quizRouter = require('./routes/quiz')
 const serveStatic = require('serve-static');
 const path = require('path');
 
-const questions = require('./data');
 
 const app = express();
 
@@ -25,36 +25,10 @@ app.get('/', async (req, res) => {
 })
 
 //Getting questions from OpenAI API
-//...
-app.get('/quizAttempt', async (req, res) => {
-    const { question, options, skill_level } = questions.find(question => question.skill_level >= 1);
-    const plainQuestion = { "question": question, "options": [...options], skill_level }
-    res.json(plainQuestion)
-})
 
-app.post('/question', async (req, res) => {
-    const { updatedSkillLevel } = req.body
-    const { question, options } = questions.find(question => question.skill_level >= updatedSkillLevel);
-    const plainQuestion = { "question": question, "options": [...options], updatedSkillLevel }
-    res.json(plainQuestion)
-})
 
-app.post('/answer', async (req, res) => {
-    //Recives answer from the user
-    const { answerNumber, updatedSkillLevel } = req.body;
-    const { scores, skill_level } = questions.find(question => question.skill_level == updatedSkillLevel);
-
-    const correctIndex = scores.findIndex(score => score == 1);
-
-    //Check if correct or wrong
-    if (answerNumber == correctIndex) {
-        res.json({ message: 'Correct!', correctIndex, selected: answerNumber, skill_level: Math.min(skill_level + 1, 10) });
-    }
-    else {
-        res.json({ message: 'Wrong!', correctIndex, selected: answerNumber, skill_level: Math.max(skill_level - 1, 1) });
-    }
-})
-
+// Quiz
+app.use(quizRouter)
 // User
 app.use('/user', userRouter)
 
