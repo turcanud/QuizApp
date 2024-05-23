@@ -208,7 +208,7 @@ async function finishQuiz() {
     finishButton.classList.add('hidden')
     restartButton.classList.remove('hidden');
     restartButton.disabled = false
-    await reset();
+    return document.location.href = "/quiz";
 }
 
 async function restartQuiz() {

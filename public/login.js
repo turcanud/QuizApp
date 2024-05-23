@@ -1,6 +1,7 @@
 const formLogin = document.getElementById('loginForm');
 const errorMessage = document.getElementById('errorMessage');
 
+
 formLogin.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -17,11 +18,17 @@ formLogin.addEventListener('submit', async (e) => {
     const json = { email: email, password: password }
     const response = await fetchApi('/login', json);
     console.log(response);
+
     if (response.accessToken) {
         // Store accessToken in localStorage
         localStorage.setItem('accessToken', response.accessToken);
         // Redirect to the desired location
-        window.location.href = 'http://localhost:3000/';
+
+        const accessToken = localStorage.getItem('accessToken');
+
+        //await fetchAttempt('/quiz', accessToken);
+        await fetchAttempt('http://localhost:3000/quiz', accessToken);
+
     } else {
         // Handle error if accessToken is not present in response
         console.error('Access token not found in response');
@@ -48,5 +55,28 @@ async function fetchApi(url, json) {
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         throw error; // Re-throwing the error so the caller can handle it
+    }
+}
+
+async function fetchAttempt(url, accessToken) {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        if (response.status === 200) {
+            window.location.href = url;
+        } else if (response.status === 401) {
+            console.log('Unauthorized');
+        } else if (response.status === 403) {
+            console.log('Forbidden');
+        } else {
+            console.log('Unexpected response status:', response.status);
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
 }

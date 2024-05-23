@@ -57,6 +57,7 @@ const loginUser = async (req, res) => {
                 })
                 token.save()
 
+                res.cookie("accessToken", accessToken, { expiresIn: 36000 });
                 res.json({ accessToken: accessToken, refreshToken: refreshToken })
             } else {
                 // Incorrect credentials

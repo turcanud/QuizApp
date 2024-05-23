@@ -1,4 +1,3 @@
-//Getting predefined data
 const router = require('express').Router();
 const { quizAttempt, getQuestion, answerQuestion } = require('../controllers/quiz');
 const { authenticateToken } = require('../../helpers/authenticateToken');

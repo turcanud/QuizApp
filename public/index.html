@@ -3,38 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Master</title>
-    <link rel="stylesheet" href="style.css" />
-    <script defer src="script.js"></script>
+    <title>Quiz AI</title>
+    <link rel="stylesheet" href="/index-styles.css" />
   </head>
   <body>
-    <div class="loader"></div>
-    <div class="container">
-      <h1 class="title">Quiz Game</h1>
-      <div id="timer">Time Elapsed: <span id="timer-display">00:00</span></div>
-      <h2 id="score">Score</h2>
-      <h2 id="skipped">Skipped</h2>
-      <h2 id="wrong">Wrong</h2>
-      <div class="btns-container">
-        <button type="button" id="play-btn" class="btn">Play!</button>
-        <button type="button" id="scoreboard-btn" class="btn">
-          Scoreboard!
-        </button>
-      </div>
-
-      <div id="game" class="game-container hidden">
-        <p id="question" class="questionText"></p>
-        <div id="options-container"></div>
-        <div class="control-btns">
-          <button id="check-btn" class="ctl-btn" type="button">Check</button>
-          <button id="next-btn" class="ctl-btn" type="button">Next</button>
-          <button id="skip-btn" class="ctl-btn" type="button">Skip</button>
-          <button id="finish-btn" class="ctl-btn" type="button">Finish</button>
-          <button id="restart-btn" class="ctl-btn" type="button">
-            Restart
+    <header class="header">
+      <nav class="nav-bar">
+        <div class="logo">
+          <h1>QuizAI</h1>
+        </div>
+        <div class="right-stuff">
+          <h2>...</h2>
+        </div>
+      </nav>
+    </header>
+    <main class="main">
+      <div class="banner-text">
+        <div class="upper-box">
+          <h1>Test your knowledge with AI</h1>
+          <h2>Try QuizAI for the best free experiance</h2>
+        </div>
+        <div class="bottom-box">
+          <button type="button" class="btn"><a href="/login">Login</a></button>
+          <button type="button" class="btn">
+            <a href="/register">Register</a>
           </button>
         </div>
       </div>
-    </div>
+      <div class="banner-animation">
+        <img src="img/quiz-time-img.jpg" alt="quiz-time-img" />
+      </div>
+    </main>
+    <footer class="footer">
+      <p class="footer-text">Copyright 2024</p>
+    </footer>
   </body>
 </html>

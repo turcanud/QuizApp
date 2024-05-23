@@ -138,7 +138,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #333333;
+  background: #3333338e;
   transition: opacity 0.25s, visibility 0.25s;
 }
 
@@ -193,26 +193,4 @@ body {
 button.btn {
   margin-top: 20px;
   width: 100%;
-}
-
-.nav {
-  background-color: #333;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-.nav-links {
-  /* If you have any links, style them here */
-}
-
-.profile {
-  text-align: right;
-}
-
-.profile-name {
-  margin: 0;
-  font-size: 18px;
 }
