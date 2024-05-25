@@ -1,6 +1,7 @@
+//imports
+import { fetchWithAuth } from './script/utils.js'
+
 const loader = document.querySelector(".loader");
-const profileName = document.querySelector(".profile-name");
-const accessToken = localStorage.getItem('accessToken');
 
 // Function to show loader
 function showLoader() {
@@ -46,7 +47,7 @@ let currentSkillLevel;
     //Start Quiz
     playButton.addEventListener('click', async () => {
         await showLoader();
-        const quizAttempt = await fetchAttempt('/attempt');
+        const quizAttempt = await fetchWithAuth('/attempt', "GET");
         await hideLoader();
         await startTimer()
         startButtonsContainer.classList.add('hidden');
@@ -62,7 +63,7 @@ let currentSkillLevel;
     //Next question
     nextButton.addEventListener('click', async () => {
         await showLoader();
-        const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
+        const question = await fetchWithAuth('/question', "POST", { updatedSkillLevel: currentSkillLevel });
         await hideLoader();
         skipButton.disabled = false;
         await nextQuestion(question)
@@ -74,7 +75,7 @@ let currentSkillLevel;
         const checkedInput = document.querySelector("input[type='radio']:checked")
         const orderNumber = checkedInput.getAttribute('data-order')
         await showLoader();
-        const result = await fetchQuiz('/answer', { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel })
+        const result = await fetchWithAuth('/answer', "POST", { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel })
         await hideLoader();
         currentSkillLevel = result.skill_level
         console.log('after check : ', result);
@@ -84,7 +85,7 @@ let currentSkillLevel;
     //Skip question
     skipButton.addEventListener('click', async () => {
         await showLoader();
-        const question = await fetchQuiz('/question', { updatedSkillLevel: currentSkillLevel });
+        const question = await fetchWithAuth('/question', "POST", { updatedSkillLevel: currentSkillLevel });
         await hideLoader();
         skipped++;
         await nextQuestion(question);
@@ -98,7 +99,7 @@ let currentSkillLevel;
     //Restart quiz
     restartButton.addEventListener('click', async () => {
         await showLoader();
-        const quizAttempt = await fetchAttempt('/attempt');
+        const quizAttempt = await fetchWithAuth('/attempt', "GET");
         await hideLoader();
         await startTimer()
         await restartQuiz();
@@ -218,46 +219,6 @@ async function restartQuiz() {
     finishButton.classList.remove('hidden')
     questionElement.classList.remove('hidden')
     await reset();
-}
-
-//Get data
-async function fetchAttempt(url) {
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
-}
-
-//Post
-async function fetchQuiz(url, json) {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(json)
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        return await response.json();
-    } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
-        throw error; // Re-throwing the error so the caller can handle it
-    }
 }
 
 //Timer

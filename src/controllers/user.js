@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
 
 // Login User
 const loginUser = async (req, res) => {
-    User.findOne({ email: req.body.email })
+    await User.findOne({ email: req.body.email })
         .then(async (result) => {
             if (result === null) {
                 return res.status(400).send('User not registered.');
