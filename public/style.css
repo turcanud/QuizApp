@@ -1,19 +1,24 @@
-/* Reset default margin and padding */
+:root {
+  --main-bg-color: #171614;
+  --main-text-color: #ffffff;
+}
+
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
 }
 
 /* Body styles */
 body {
-  background-color: #f4f4f4; /* Light gray background */
-  font-family: Arial, sans-serif;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
 }
 
 /* Container styles */
 .container {
-  background-color: #fff; /* White container background */
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow */
   display: flex;
@@ -26,7 +31,6 @@ body {
 
 /* Title styles */
 .title {
-  color: #333; /* Dark gray text color */
   font-size: 36px;
   margin-bottom: 20px;
 }
@@ -38,8 +42,8 @@ body {
 
 /* Button styles */
 .btn {
+  color: var(--main-text-color);
   background-color: #4caf50; /* Green button background */
-  color: #fff; /* White button text color */
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -64,7 +68,6 @@ body {
 .questionText {
   font-size: 24px; /* Increase font size */
   font-weight: bold; /* Make the text bold */
-  color: #333; /* Dark gray text color */
   text-align: center; /* Center-align the text */
   margin-bottom: 20px; /* Add some space below the question */
 }
@@ -87,13 +90,12 @@ body {
 
 .ctl-btn {
   background-color: #4caf50; /* Green button background */
-  color: #fff; /* White button text color */
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .ctl-btn:hover {
@@ -102,7 +104,6 @@ body {
 
 .ctl-btn:disabled {
   background-color: #ccc; /* Light gray background when disabled */
-  color: #666; /* Dark gray text color when disabled */
   cursor: not-allowed; /* Change cursor to not-allowed */
 }
 
@@ -113,14 +114,12 @@ body {
 /* Result styles */
 .correct {
   background-color: #4caf50; /* Green for correct answer */
-  color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
 }
 
 .wrong {
   background-color: #f44336; /* Red for wrong answer */
-  color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
 }
