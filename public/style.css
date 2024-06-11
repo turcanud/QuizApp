@@ -17,6 +17,27 @@ body {
   color: var(--main-text-color);
 }
 
+.header {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+}
+
+.logo {
+  margin: auto; /* This will center the logo horizontally */
+}
+
+.logo h1 {
+  font-size: 3rem;
+  color: transparent;
+  background-image: linear-gradient(to top, #fffdf7 50%, #d5d0cd 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
 /* Container styles */
 .container {
   border-radius: 10px; /* Rounded corners */

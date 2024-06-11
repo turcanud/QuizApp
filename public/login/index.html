@@ -8,6 +8,22 @@
     <script type="module" defer src="/login.js"></script>
   </head>
   <body>
+    <l-helix
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(100%);
+        transform: translateY(75%);
+      "
+      size="300"
+      speed="5"
+      color="white"></l-helix>
+    <header class="header">
+      <div class="logo">
+        <h1>QuizAI</h1>
+      </div>
+    </header>
     <div class="container">
       <h2 class="title">Login</h2>
       <form id="loginForm">
@@ -23,5 +39,8 @@
       </form>
       <div id="errorMessage" class="error-message hidden"></div>
     </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/helix.js"></script>
   </body>
 </html>

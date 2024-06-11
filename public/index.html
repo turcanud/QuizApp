@@ -7,13 +7,21 @@
     <link rel="stylesheet" href="/index-styles.css" />
   </head>
   <body>
+    <l-helix
+      style="
+        position: absolute;
+        top: 0;
+        right: 250px;
+        align-content: end;
+        transform: translateY(75%);
+      "
+      size="300"
+      speed="10"
+      color="white"></l-helix>
     <header class="header">
       <nav class="nav-bar">
         <div class="logo">
           <h1>QuizAI</h1>
-        </div>
-        <div class="right-stuff">
-          <h2>...</h2>
         </div>
       </nav>
     </header>
@@ -24,18 +32,21 @@
           <h2>Try QuizAI for the best free experiance</h2>
         </div>
         <div class="bottom-box">
-          <button type="button" class="btn"><a href="/login">Login</a></button>
-          <button type="button" class="btn">
-            <a href="/register">Register</a>
-          </button>
+          <a href="/login">
+            <button type="button" class="btn">Login</button>
+          </a>
+          <a href="/register">
+            <button type="button" class="btn">Register</button>
+          </a>
         </div>
       </div>
-      <div class="banner-animation">
-        <img src="img/quiz-time-img.jpg" alt="quiz-time-img" />
-      </div>
+      <div class="banner-animation"></div>
     </main>
     <footer class="footer">
-      <p class="footer-text">Copyright 2024</p>
+      <p class="footer-text">Copyright &copy; 2024</p>
     </footer>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/helix.js"></script>
   </body>
 </html>

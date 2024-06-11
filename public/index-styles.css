@@ -17,20 +17,28 @@ body {
   margin: 1em 100px 1em;
 }
 
+.logo h1 {
+  font-size: 3rem;
+  color: transparent;
+  background-image: linear-gradient(to top, #fffdf7 50%, #d5d0cd 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
 .nav-bar {
   height: 100px;
-  border-bottom: 2px solid white;
+  /* border-bottom: 2px solid white; */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .main {
   margin-top: 10px;
   margin-bottom: 10px;
   height: 500px;
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+  /* border-top: 2px solid white;
+  border-bottom: 2px solid white; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -65,6 +73,6 @@ body {
 }
 
 .footer {
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
+  /* border-top: 2px solid white;
+  border-bottom: 2px solid white; */
 }
