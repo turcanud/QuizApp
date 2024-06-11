@@ -3,7 +3,6 @@ const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/user')
 const quizRouter = require('./routes/quiz')
-// const serveStatic = require('serve-static');
 const path = require('path');
 
 const db = require('../helpers/db');

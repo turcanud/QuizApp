@@ -75,7 +75,10 @@ let currentSkillLevel;
         const checkedInput = document.querySelector("input[type='radio']:checked")
         const orderNumber = checkedInput.getAttribute('data-order')
         await showLoader();
-        const result = await fetchWithAuth('/answer', "POST", { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel })
+        const questionElement = document.querySelector('#question');
+        const timerDisplay = document.querySelector('#timer-display');
+
+        const result = await fetchWithAuth('/answer', "POST", { answerNumber: orderNumber, updatedSkillLevel: currentSkillLevel, questionId: currentQuestionIndex, questionText: questionElement.textContent, timeTaken: timerDisplay.textContent });
         await hideLoader();
         currentSkillLevel = result.skill_level
         console.log('after check : ', result);
